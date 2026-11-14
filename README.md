@@ -66,7 +66,8 @@ Edit `config.json` next to `taskbar_player.py` and restart the program. Missing 
 | `reposition_ms` | `500` | reposition / re-topmost interval |
 | `hide_when_fullscreen` | `true` | hide while a fullscreen window is in front |
 | `hide_scope` | `"any_monitor"` | fullscreen hiding scope |
-| `marquee_px_per_s` | `30` | title scroll speed |
+| `marquee_px_per_s` | `6` | title scroll speed (kept very slow so it doesn't pull your eye) |
+| `marquee_pause_s` | `5` | pause at the start of each scroll cycle (seconds) |
 
 If you also run taskbar-gauge on the primary taskbar, raise `primary_tray_gap_dip` (for example 174) so the player sits to the left of the gauges.
 

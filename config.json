@@ -11,5 +11,6 @@
   "reposition_ms": 500,
   "hide_when_fullscreen": true,
   "hide_scope": "any_monitor",
-  "marquee_px_per_s": 30
+  "marquee_px_per_s": 6,
+  "marquee_pause_s": 5
 }

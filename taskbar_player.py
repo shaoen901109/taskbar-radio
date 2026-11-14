@@ -31,7 +31,7 @@ DEFAULT_CFG = {
     "width_dip": 200, "pad_dip": 2, "theme": "auto", "show_on": "primary",
     "secondary_right_offset_dip": 293, "primary_tray_gap_dip": 6,
     "reposition_ms": 500, "hide_when_fullscreen": True, "hide_scope": "any_monitor",
-    "marquee_px_per_s": 30,
+    "marquee_px_per_s": 6, "marquee_pause_s": 5,
 }
 
 
@@ -479,7 +479,11 @@ class PlayerBar(QWidget):
         over = tw > text.width()
         if over:
             loop = tw + 40 * self.k
-            self.offset = (self.offset + CFG["marquee_px_per_s"] * self.k * dt) % loop
+            if now >= getattr(self, "_hold_until", 0):
+                new = (self.offset + CFG["marquee_px_per_s"] * self.k * dt) % loop
+                if new < self.offset:   # 繞完一圈：回到開頭停一下再走，降低存在感
+                    new, self._hold_until = 0.0, now + CFG["marquee_pause_s"]
+                self.offset = new
         else:
             self.offset = 0.0
         if self.ctl.playing or over or self.ctl.engine.playing != getattr(self, "_was", None):

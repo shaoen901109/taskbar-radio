@@ -66,7 +66,8 @@ pip install -r requirements.txt
 | `reposition_ms` | `500` | 重新定位／重新置頂的間隔 |
 | `hide_when_fullscreen` | `true` | 有全螢幕視窗在前景時隱藏 |
 | `hide_scope` | `"any_monitor"` | 全螢幕隱藏的範圍 |
-| `marquee_px_per_s` | `30` | 曲名跑馬燈速度 |
+| `marquee_px_per_s` | `6` | 曲名跑馬燈速度（刻意極慢，不搶視覺焦點） |
+| `marquee_pause_s` | `5` | 每繞完一圈回到開頭停留的秒數 |
 
 如果你在主工作列也跑 taskbar-gauge，請把 `primary_tray_gap_dip` 調大（例如 174），讓播放器位在儀表左邊。
 
