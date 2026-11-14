@@ -1,0 +1,15 @@
+{
+  "root": "%USERPROFILE%\\Music",
+  "suites": [],
+  "volume": 50,
+  "width_dip": 200,
+  "pad_dip": 2,
+  "theme": "auto",
+  "show_on": "primary",
+  "secondary_right_offset_dip": 293,
+  "primary_tray_gap_dip": 6,
+  "reposition_ms": 500,
+  "hide_when_fullscreen": true,
+  "hide_scope": "any_monitor",
+  "marquee_px_per_s": 30
+}
