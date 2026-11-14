@@ -92,12 +92,12 @@ Run `移除開機啟動.bat` to remove the startup shortcut, choose Quit from th
 
 ## Verify your download
 
-Download `taskbar-radio-v1.0.0.zip` and `SHA256SUMS.txt` from [Releases](https://github.com/shaoen901109/taskbar-radio/releases) (use the version you actually downloaded).
+Download `taskbar-radio-v1.0.1.zip` and `SHA256SUMS.txt` from [Releases](https://github.com/shaoen901109/taskbar-radio/releases) (use the version you actually downloaded).
 
 1. Compare the checksum in PowerShell:
 
    ```powershell
-   Get-FileHash .\taskbar-radio-v1.0.0.zip -Algorithm SHA256
+   Get-FileHash .\taskbar-radio-v1.0.1.zip -Algorithm SHA256
    ```
 
    The `Hash` must match the string in `SHA256SUMS.txt` (letter case does not matter).
@@ -105,7 +105,7 @@ Download `taskbar-radio-v1.0.0.zip` and `SHA256SUMS.txt` from [Releases](https:/
 2. Verify where it was built (needs [GitHub CLI](https://cli.github.com/)):
 
    ```powershell
-   gh attestation verify .\taskbar-radio-v1.0.0.zip --repo shaoen901109/taskbar-radio
+   gh attestation verify .\taskbar-radio-v1.0.1.zip --repo shaoen901109/taskbar-radio
    ```
 
    A successful result means GitHub Actions built this zip from this repository's source and it was not swapped along the way.
