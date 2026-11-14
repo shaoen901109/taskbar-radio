@@ -477,6 +477,9 @@ class PlayerBar(QWidget):
         icons, text = self.layout_rects()
         tw = QFontMetricsF(self.text_font()).horizontalAdvance(self.ctl.title)
         over = tw > text.width()
+        if self.ctl.title != getattr(self, "_last_title", None):  # 換曲：從開頭顯示並先停一下
+            self._last_title, self.offset = self.ctl.title, 0.0
+            self._hold_until = now + CFG["marquee_pause_s"]
         if over:
             loop = tw + 40 * self.k
             if now >= getattr(self, "_hold_until", 0):
