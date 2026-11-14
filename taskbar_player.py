@@ -28,8 +28,8 @@ LNK_NAME = "工作列音樂播放器.lnk"
 # 副工作列右緣偏移 = 儀表右緣偏移 125 + 儀表寬 (3*44 + 2*12 = 156，以 48dip 工作列計) + 間距 12
 DEFAULT_CFG = {
     "root": os.path.join(os.path.expanduser("~"), "Music"), "suites": [], "volume": 50,
-    "width_dip": 200, "pad_dip": 2, "theme": "auto", "show_on": "secondary",
-    "secondary_right_offset_dip": 293, "primary_tray_gap_dip": 174,
+    "width_dip": 200, "pad_dip": 2, "theme": "auto", "show_on": "primary",
+    "secondary_right_offset_dip": 293, "primary_tray_gap_dip": 6,
     "reposition_ms": 500, "hide_when_fullscreen": True, "hide_scope": "any_monitor",
     "marquee_px_per_s": 30,
 }
