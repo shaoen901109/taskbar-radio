@@ -212,6 +212,13 @@ RATE = 44100
 RING = 2048
 
 
+def _quiet_close(dev):
+    try:
+        dev.close()
+    except Exception:
+        pass
+
+
 class Engine:
     """miniaudio 串流解碼（不整檔載入）→ PlaybackDevice；波形取自音量前的最近 2048 幀。"""
 
@@ -227,6 +234,8 @@ class Engine:
         self.ring = np.zeros((RING, 2), np.float32)
         self.dev = None
         self.path = None
+        self.last_cb = 0.0
+        self.dev_resets = 0
 
     def _ensure_dev(self):
         if self.dev is None:
@@ -236,11 +245,23 @@ class Engine:
                 sample_rate=RATE, buffersize_msec=120)
             g = self._cb()
             next(g)
+            self.last_cb = time.monotonic()
             self.dev.start(g)
+
+    def watchdog(self, stall_s=2.0):
+        """音效裝置被系統拔掉／切換（藍牙、HDMI 休眠、預設裝置變更）後回呼會停住：
+        沒聲音、波形不動，且不會丟錯。偵測到就丟掉舊裝置重開一個。回傳是否重開。"""
+        if self.dev is None or time.monotonic() - self.last_cb < stall_s:
+            return False
+        old, self.dev = self.dev, None
+        threading.Thread(target=lambda: _quiet_close(old), daemon=True).start()  # 卡住的裝置 close 可能會等
+        self._ensure_dev()
+        return True
 
     def _cb(self):
         n = yield b""
         while True:
+            self.last_cb = time.monotonic()
             try:
                 out = self._fill(n)
             except Exception:
@@ -389,6 +410,9 @@ class Controller:
         self._play(self.playlist.prev(self.engine.position_s()))
 
     def poll(self):
+        if self.engine.watchdog():
+            self.engine.dev_resets += 1
+            log_msg("音效裝置停止回應，已重新開啟（第 %d 次）" % self.engine.dev_resets)
         if self.engine.ended or self.engine.failed:
             if self.engine.failed:
                 log_msg("解碼失敗，跳過：" + str(self.engine.path))
